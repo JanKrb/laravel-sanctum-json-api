@@ -41,4 +41,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Generate Personal Access Token for authentication.
+     * @param bool $rememberMe
+     * @return mixed
+     */
+    public function createPersonalAccessToken(?bool $rememberMe = false)
+    {
+        $tokenResult = $this->createToken('Personal Access Token', ['*']);
+        $token = $tokenResult->accessToken;
+
+        if ($rememberMe) {
+            $token->expires_at = now()->addWeeks(1);
+        }
+
+        $token->save();
+
+        return [
+            'access_token' => $tokenResult->plainTextToken,
+            'token_type' => 'Bearer',
+        ];
+    }
 }
