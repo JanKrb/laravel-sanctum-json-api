@@ -40,6 +40,19 @@ class AuthController extends Controller
             'message' => 'Invalid credentials.'
         ], 401);
     }
+
+    /**
+     * Get own user information
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function user(Request $request): JsonResponse
+    {
+        return $this->sendResponse([
+            "user" => $request->user()
+        ], 'Own user information fetched successfully.');
+    }
+
     /**
      * Create a new user instance after a valid registration.
      * @param RegisterRequest $request

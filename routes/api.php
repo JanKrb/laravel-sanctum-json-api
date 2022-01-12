@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Security\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login'])
         ->withoutMiddleware('auth:sanctum')
         ->name('login');
@@ -23,4 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         ->withoutMiddleware('auth:sanctum')
         ->name('register');
 
+    Route::get('user', [AuthController::class, 'user'])
+        ->name('user');
 });
