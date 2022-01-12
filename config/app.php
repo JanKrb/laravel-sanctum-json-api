@@ -58,6 +58,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | API Rate Limit
+    |--------------------------------------------------------------------------
+    |
+    | The API rate limit is the maximum number of requests that are allowed
+    | to be made by a single client within a minute.
+    |
+    */
+
+    'rate_limit' => env('API_RATE_LIMIT', 60),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
