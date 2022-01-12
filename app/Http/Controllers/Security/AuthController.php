@@ -40,4 +40,25 @@ class AuthController extends Controller
             'message' => 'Invalid credentials.'
         ], 401);
     }
+    /**
+     * Create a new user instance after a valid registration.
+     * @param RegisterRequest $request
+     * @return JsonResponse
+     */
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $credentials = $request->validated();
+
+        // Hash password
+        $credentials['password'] = Hash::make($credentials['password']);
+
+        // Create user and PAT
+        $user = User::create($credentials);
+        $token = $user->createPersonalAccessToken($request->remember_me);
+
+        return $this->sendResponse([
+            'token' => $token,
+            'user' => $user
+        ], 'User created and authenticated successfully.');
+    }
 }
