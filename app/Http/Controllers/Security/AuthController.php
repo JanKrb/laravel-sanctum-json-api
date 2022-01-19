@@ -67,6 +67,7 @@ class AuthController extends Controller
 
         // Create user and PAT
         $user = User::create($credentials);
+        $user->sendEmailVerificationNotification();
         $token = $user->createPersonalAccessToken($request->remember_me);
 
         return $this->sendResponse([
