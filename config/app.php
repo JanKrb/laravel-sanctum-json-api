@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'frontend_url' => env('APP_FRONTEND', 'http://localhost:81'),
 
     'asset_url' => env('ASSET_URL', null),
 
