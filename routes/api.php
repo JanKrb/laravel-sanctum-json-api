@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Security\AuthController;
+use App\Http\Controllers\Security\RoleController;
 use App\Http\Controllers\Security\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,9 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth', 'as' => 'auth.
 
     Route::post('email/resend', [VerificationController::class, 'resend'])
         ->name('verification.resend');
+});
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    // Roles
+    Route::apiResource('roles', RoleController::class);
 });
