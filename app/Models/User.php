@@ -6,7 +6,9 @@ use App\Traits\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class User extends Authenticatable
 {
@@ -70,5 +72,38 @@ class User extends Authenticatable
             'access_token' => $tokenResult->plainTextToken,
             'token_type' => 'Bearer',
         ];
+    }
+
+    /**
+     * Profile Image
+     */
+
+    /**
+     * Get profile image helper
+     * @return StreamedResponse|null
+     */
+    public function getProfileImage(): ?StreamedResponse
+    {
+        if ($this->profile_picture) {
+            // Save web link image in db
+            if (str_starts_with($this->profile_image, 'http')) return $this->profile_image;
+
+            return Storage::disk('public')->response('profile_pictures/' . $this->profile_picture);
+        }
+
+        return null;
+    }
+
+    /**
+     * Set profile image helper
+     * @param $image Image Request Image (must be validated)
+     * @return string String with the path of the image
+     */
+    public function setProfileImage($image): string
+    {
+        $path = $image->store('profile_images');
+        $this->fill(['profile_image' => $path])->save();
+
+        return $path;
     }
 }
