@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Security\Auth;
 
+use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -16,7 +17,11 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'unique:users'],
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'string', 'confirmed']
+            'password' => ['required', 'string', 'confirmed'],
+            'first_name' => ['nullable', 'string'],
+            'last_name' => ['nullable', 'string'],
+            'phone' => ['nullable', new PhoneNumber],
+            'birthdate' => ['nullable', 'date_format:Y-m-d'],
         ];
     }
 }
