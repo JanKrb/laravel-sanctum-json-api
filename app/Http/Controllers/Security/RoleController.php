@@ -38,4 +38,9 @@ class RoleController extends Controller
         $role->update($request->validated());
         return $this->sendResponse($role, "Successfully updated role");
     }
+
+    public function destroy(Role $role) {
+        $role->delete();
+        return $this->sendResponse($role, "Successfully deleted role");
+    }
 }
