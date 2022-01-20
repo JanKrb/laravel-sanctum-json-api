@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Security;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -19,8 +20,9 @@ class RoleController extends Controller
         $this->middleware('permission:role.delete')->only('destroy');
     }
 
-    public function index() {}
-    public function store() {}
+    public function index() {
+        return $this->sendResponse(Role::all(), "Successfully retrieved roles");
+    }
     public function show() {}
     public function update() {}
     public function destroy() {}
