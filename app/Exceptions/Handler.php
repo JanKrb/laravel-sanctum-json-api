@@ -2,10 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Controller;
 use App\Http\Handler\NoPermissionHandler;
 use App\Http\Handler\NotFoundHandler;
+use App\Http\Handler\ValidationErrorHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
 
@@ -48,8 +51,13 @@ class Handler extends ExceptionHandler
             return NoPermissionHandler::handle($request, $e);
         } else if ($e instanceof ModelNotFoundException) {
             return NotFoundHandler::handle($request, $e);
+        } else if ($e instanceof ValidationException) {
+            return ValidationErrorHandler::handle($request, $e);
         }
 
-        throw $e;
+        return (new Controller())->sendError('Something went wrong', [
+            'error' => $e->getMessage(),
+            'stack' => $e->getTrace()
+        ], 500);
     }
 }
