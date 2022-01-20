@@ -30,7 +30,7 @@ class RoleController extends Controller
         return $this->sendResponse($role, "Successfully created role");
     }
 
-    public function show() {}
-    public function update() {}
-    public function destroy() {}
+    public function show(Role $role) {
+        return $this->sendResponse($role, "Successfully retrieved role");
+    }
 }
