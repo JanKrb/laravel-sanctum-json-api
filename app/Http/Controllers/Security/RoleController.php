@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Security;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Security\Permissions\CreateRoleRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Security\Permissions\UpdateRoleRequest;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -32,5 +32,10 @@ class RoleController extends Controller
 
     public function show(Role $role) {
         return $this->sendResponse($role, "Successfully retrieved role");
+    }
+
+    public function update(UpdateRoleRequest $request, Role $role) {
+        $role->update($request->validated());
+        return $this->sendResponse($role, "Successfully updated role");
     }
 }
