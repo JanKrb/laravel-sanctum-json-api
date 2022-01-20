@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Security\AuthController;
-use App\Http\Controllers\Security\RoleController;
-use App\Http\Controllers\Security\VerificationController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Security\Auth\AuthController;
+use App\Http\Controllers\Security\Auth\VerificationController;
+use App\Http\Controllers\Security\Permissions\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*

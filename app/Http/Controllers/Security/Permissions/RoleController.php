@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Security;
+namespace App\Http\Controllers\Security\Permissions;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Security\Permissions\CreateRoleRequest;
