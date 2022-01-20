@@ -3,8 +3,9 @@
 namespace App\Exceptions;
 
 use App\Http\Handler\NoPermissionHandler;
+use App\Http\Handler\NotFoundHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
 
@@ -45,6 +46,10 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e) {
         if ($e instanceof UnauthorizedException) {
             return NoPermissionHandler::handle($request, $e);
+        } else if ($e instanceof ModelNotFoundException) {
+            return NotFoundHandler::handle($request, $e);
         }
+
+        throw $e;
     }
 }
