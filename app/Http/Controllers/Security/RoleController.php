@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Security;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Security\Permissions\CreateRoleRequest;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -23,6 +24,12 @@ class RoleController extends Controller
     public function index() {
         return $this->sendResponse(Role::all(), "Successfully retrieved roles");
     }
+
+    public function store(CreateRoleRequest $request) {
+        $role = Role::create($request->validated());
+        return $this->sendResponse($role, "Successfully created role");
+    }
+
     public function show() {}
     public function update() {}
     public function destroy() {}
