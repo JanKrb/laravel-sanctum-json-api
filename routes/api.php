@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Security\Auth\AuthController;
 use App\Http\Controllers\Security\Auth\VerificationController;
+use App\Http\Controllers\Security\Permissions\PermissionController;
 use App\Http\Controllers\Security\Permissions\RoleController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,6 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth', 'as' => 'auth.
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    // Roles
     Route::apiResource('roles', RoleController::class);
+    Route::apiResource('permissions', PermissionController::class);
 });
