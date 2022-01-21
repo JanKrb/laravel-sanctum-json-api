@@ -14,7 +14,7 @@ class RolePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'permission_name' => 'required_without:permission_id|string|max:255',
+            'permission_name' => 'required_without:permission_id|string|max:255|exists:permissions,name',
             'permission_id' => 'required_without:permission_name|int|exists:permissions,id'
         ];
     }
