@@ -17,10 +17,10 @@ class RolePermissionsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:role.*.permissions.list')->only('index');
-        $this->middleware('permission:role.*.permissions.attach')->only('store');
-        $this->middleware('permission:role.*.permissions.show')->only('show');
-        $this->middleware('permission:role.*.permissions.detach')->only('destroy');
+        $this->middleware('permission:role.permissions.list')->only('index');
+        $this->middleware('permission:role.permissions.attach')->only('store');
+        $this->middleware('permission:role.permissions.show')->only('show');
+        $this->middleware('permission:role.permissions.detach')->only('destroy');
     }
 
     private function getPermissionFromRequest(RolePermissionRequest $request): ?Permission
