@@ -5,6 +5,7 @@ use App\Http\Controllers\Security\Auth\VerificationController;
 use App\Http\Controllers\Security\Permissions\PermissionController;
 use App\Http\Controllers\Security\Permissions\RoleController;
 use App\Http\Controllers\Security\Permissions\RolePermissionsController;
+use App\Http\Controllers\Security\Permissions\UserPermissionsController;
 use App\Http\Controllers\Security\Permissions\UserRolesController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,4 +60,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('users/{user}/roles/{role}', [UserRolesController::class, 'show']);
     Route::delete('users/{user}/roles/{role}', [UserRolesController::class, 'destroy']);
 
+    // User Permissions - Many to Many
+    Route::get('users/{user}/permissions', [UserPermissionsController::class, 'index']);
+    Route::post('users/{user}/permissions', [UserPermissionsController::class, 'store']);
+    Route::get('users/{user}/permissions/{permission}', [UserPermissionsController::class, 'show']);
+    Route::delete('users/{user}/permissions/{permission}', [UserPermissionsController::class, 'destroy']);
 });
