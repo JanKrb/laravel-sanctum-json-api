@@ -43,8 +43,10 @@ class UserRolesController extends Controller
         ], "Successfully checked if user has role");
     }
 
-    public function show(User $user) {
-        return $this->sendResponse($user->getRoleNames(), "Successfully checked if user has role");
+    public function show(User $user, string $role) {
+        return $this->sendResponse([
+            'is_attached' => $user->hasRole($role)
+        ], "Successfully checked if user has role");
     }
 
     public function destroy(User $user) {}
