@@ -4,6 +4,7 @@ use App\Http\Controllers\Security\Auth\AuthController;
 use App\Http\Controllers\Security\Auth\VerificationController;
 use App\Http\Controllers\Security\Permissions\PermissionController;
 use App\Http\Controllers\Security\Permissions\RoleController;
+use App\Http\Controllers\Security\Permissions\RolePermissionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,4 +45,10 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth', 'as' => 'auth.
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('permissions', PermissionController::class);
+
+    // Role Permission - Many to Many
+    Route::get('roles/{role}/permissions', [RolePermissionsController::class, 'index']);
+    Route::post('roles/{role}/permissions', [RolePermissionsController::class, 'show']);
+    Route::get('roles/{role}/permissions/{permission}', [RolePermissionsController::class, 'show']);
+    Route::delete('roles/{role}/permissions/{permission}', [RolePermissionsController::class, 'destroy']);
 });
