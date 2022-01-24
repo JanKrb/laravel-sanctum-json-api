@@ -49,5 +49,15 @@ class UserRolesController extends Controller
         ], "Successfully checked if user has role");
     }
 
-    public function destroy(User $user) {}
+    public function destroy(User $user, string $role) {
+        if (! $user->hasRole($role)) {
+            return $this->sendError("Role is not attached to user");
+        }
+
+        $user->removeRole($role);
+
+        return $this->sendResponse([
+            'role_name' => $role
+        ], "Successfully removed role from user");
+    }
 }
