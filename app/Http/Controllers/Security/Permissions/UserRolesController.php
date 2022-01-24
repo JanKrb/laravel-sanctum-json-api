@@ -39,7 +39,7 @@ class UserRolesController extends Controller
         $role = $this->getRoleFromRequest($request);
 
         return $this->sendResponse([
-            'has_role' => $user->hasRole($role)
+            'has_role' => $user->assignRole($role)
         ], "Successfully checked if user has role");
     }
 
