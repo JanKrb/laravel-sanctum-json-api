@@ -46,8 +46,8 @@ class RolePermissionsController extends Controller
 
     /**
      * Return if permission is attached to role
-     * @param RolePermissionRequest $request
      * @param Role $role
+     * @param string $permission
      * @return JsonResponse
      */
     public function show(Role $role, string $permission): JsonResponse
