@@ -17,6 +17,7 @@ class AuthController extends Controller
      * Authenticate user and create token
      * @param LoginRequest $request
      * @return JsonResponse
+     * TODO: Unit Test
      */
     public function login(LoginRequest $request): JsonResponse
     {

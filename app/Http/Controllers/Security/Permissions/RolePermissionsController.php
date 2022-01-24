@@ -14,6 +14,7 @@ class RolePermissionsController extends Controller
     /**
      * Implement permission middlewares
      * TODO: Test Controller
+     * TODO: Unit Test
      */
     public function __construct()
     {
