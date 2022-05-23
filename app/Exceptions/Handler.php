@@ -5,7 +5,9 @@ namespace App\Exceptions;
 use App\Http\Controllers\Controller;
 use App\Http\Handler\NoPermissionHandler;
 use App\Http\Handler\NotFoundHandler;
+use App\Http\Handler\UnauthenticatedHandler;
 use App\Http\Handler\ValidationErrorHandler;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -47,16 +49,14 @@ class Handler extends ExceptionHandler
     }
 
     public function render($request, Throwable $e) {
-        if ($e instanceof UnauthorizedException) {
-            return NoPermissionHandler::handle($request, $e);
-        } else if ($e instanceof ModelNotFoundException) {
-            return NotFoundHandler::handle($request, $e);
-        } else if ($e instanceof ValidationException) {
-            return ValidationErrorHandler::handle($request, $e);
-        }
+        if ($e instanceof UnauthorizedException) return NoPermissionHandler::handle($request, $e);
+        else if ($e instanceof ModelNotFoundException) return NotFoundHandler::handle($request, $e);
+        else if ($e instanceof ValidationException) return ValidationErrorHandler::handle($request, $e);
+        else if ($e instanceof AuthenticationException) return UnauthenticatedHandler::handle($request, $e);
 
         return (new Controller())->sendError('Something went wrong', [
             'error' => $e->getMessage(),
+            'path' => $e->getFile() . ' @ ' . $e->getLine(),
             'stack' => $e->getTrace()
         ], 500);
     }
