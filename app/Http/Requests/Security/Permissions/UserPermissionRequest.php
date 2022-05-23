@@ -4,7 +4,7 @@ namespace App\Http\Requests\Security\Permissions;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RolePermissionRequest extends FormRequest
+class UserPermissionRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

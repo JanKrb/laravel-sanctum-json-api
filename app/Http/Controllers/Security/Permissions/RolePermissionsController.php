@@ -14,13 +14,14 @@ class RolePermissionsController extends Controller
     /**
      * Implement permission middlewares
      * TODO: Test Controller
+     * TODO: Unit Test
      */
     public function __construct()
     {
-        $this->middleware('permission:role.*.permissions.list')->only('index');
-        $this->middleware('permission:role.*.permissions.attach')->only('store');
-        $this->middleware('permission:role.*.permissions.show')->only('show');
-        $this->middleware('permission:role.*.permissions.detach')->only('destroy');
+        $this->middleware('permission:role.permissions.list')->only('index');
+        $this->middleware('permission:role.permissions.attach')->only('store');
+        $this->middleware('permission:role.permissions.show')->only('show');
+        $this->middleware('permission:role.permissions.detach')->only('destroy');
     }
 
     private function getPermissionFromRequest(RolePermissionRequest $request): ?Permission
@@ -46,29 +47,27 @@ class RolePermissionsController extends Controller
 
     /**
      * Return if permission is attached to role
-     * @param RolePermissionRequest $request
      * @param Role $role
+     * @param string $permission
      * @return JsonResponse
      */
-    public function show(RolePermissionRequest $request, Role $role): JsonResponse
+    public function show(Role $role, string $permission): JsonResponse
     {
-        $permission = $this->getPermissionFromRequest($request);
-
         return $this->sendResponse([
-            "is_attached" => $role->checkPermissionTo($permission)
+            "is_attached" => $role->hasPermissionTo($permission)
         ], "Successfully checked for connection between role and permission");
     }
 
-    public function detach(RolePermissionRequest $request, Role $role): JsonResponse
+    public function destroy(Role $role, string $permission): JsonResponse
     {
-        $permission = $this->getPermissionFromRequest($request);
-
         if (! $role->checkPermissionTo($permission)) {
             return $this->sendError("Permission is not attached to role");
         }
 
         $role->revokePermissionTo($permission);
 
-        return $this->sendResponse($permission, "Successfully revoked permission from role");
+        return $this->sendResponse([
+            'permission_name' => $permission
+        ], "Successfully revoked permission from role");
     }
 }

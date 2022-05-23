@@ -12,6 +12,12 @@ use function response;
 
 class VerificationController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param int $user_id
+     * @return \Illuminate\Http\JsonResponse
+     * TODO: Unit Test
+     */
     public function verify(Request $request, int $user_id) {
         $user = User::findOrFail($user_id);
 

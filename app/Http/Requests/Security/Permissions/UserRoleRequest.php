@@ -4,7 +4,7 @@ namespace App\Http\Requests\Security\Permissions;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RolePermissionRequest extends FormRequest
+class UserRoleRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,8 @@ class RolePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'permission_name' => 'required_without:permission_id|string|max:255|exists:permissions,name',
-            'permission_id' => 'required_without:permission_name|int|exists:permissions,id'
+            'role_name' => 'required_without:role_id|string|max:255|exists:roles,name',
+            'role_id' => 'required_without:role_name|int|exists:roles,id'
         ];
     }
 }

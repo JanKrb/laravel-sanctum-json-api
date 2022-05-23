@@ -13,6 +13,7 @@ class PermissionController extends Controller
 {
     /**
      * Implement permission middlewares
+     * TODO: Unit Test
      */
     public function __construct()
     {
