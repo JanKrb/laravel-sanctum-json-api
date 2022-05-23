@@ -17,8 +17,8 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request): JsonResponse
     {
-        throw new HttpResponseException((new Controller())->sendError('Unauthorized Request', [
+        return (new Controller())->sendError('Unauthorized Request', [
             'failure_reason' => 'Fresh Access Token Required'
-        ], 401));
+        ], 401);
     }
 }
